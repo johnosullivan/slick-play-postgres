@@ -1,0 +1,39 @@
+@(person: Form[CreatePersonForm])(implicit request: MessagesRequestHeader)
+
+@import helper._
+
+@request.flash.get("success").map { key =>
+   @request.messages(key)
+}
+
+@main("Welcome to Play") {
+  @form(routes.PersonController.addPerson()) {
+		@inputText(person("name"))
+		@inputText(person("age"))
+		@CSRF.formField
+
+		<div class="buttons">
+			<input type="submit" value="Add Person"/>
+		</div>
+	}
+
+	@form(routes.PersonController.delPerson()) {
+		@inputText(person("id"))
+		@CSRF.formField
+
+		<div class="buttons">
+			<input type="submit" value="Delete Person"/>
+		</div>
+	}
+
+	@form(routes.PersonController.editPerson()) {
+		@inputText(person("id"))
+		@inputText(person("name"))
+		@inputText(person("age"))
+		@CSRF.formField
+
+		<div class="buttons">
+			<input type="submit" value="Edit Person"/>
+		</div>
+	}
+}
